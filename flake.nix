@@ -1,8 +1,8 @@
 {
-  description = "Template for nix projects";
+  description = "My Home Manager Modules";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
     systems.url = "github:nix-systems/x86_64-linux";
     treefmt = {
       url = "github:numtide/treefmt-nix";
@@ -32,7 +32,11 @@
       treefmt,
       ...
     }:
-    utils.lib.eachDefaultSystem (
+    {
+      homeManagerModules = {
+        aider = import ./aider-chat.nix;
+      };
+    } // utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import nixpkgs { inherit system; };
