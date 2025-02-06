@@ -33,7 +33,7 @@ in
   config = mkIf cfg.enable {
     home.packages = [ cfg.package ];
     
-    xdg.configFile.".aider.conf.yml".text = mkIf (cfg.settings != {}) ''
+    home.file.".aider.conf.yml".text = mkIf (cfg.settings != {}) ''
       auto-commits: ${if cfg.settings.autoCommits then "true" else "false"}
     '';
   };
