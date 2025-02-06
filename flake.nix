@@ -34,7 +34,7 @@
     }:
     {
       homeManagerModules = {
-        aider = import ./aider-chat.nix;
+        aider = import ./aider.nix;
       };
     } // utils.lib.eachDefaultSystem (
       system:
