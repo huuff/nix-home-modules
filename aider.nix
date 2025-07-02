@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -8,7 +13,7 @@ in
 {
   options.programs.aider = {
     enable = mkEnableOption "AI pair programming tool";
-    
+
     package = mkOption {
       type = types.package;
       default = pkgs.aider-chat;
@@ -25,15 +30,15 @@ in
           };
         };
       };
-      default = {};
+      default = { };
       description = "Aider configuration settings";
     };
   };
 
   config = mkIf cfg.enable {
     home.packages = [ cfg.package ];
-    
-    home.file.".aider.conf.yml".text = mkIf (cfg.settings != {}) ''
+
+    home.file.".aider.conf.yml".text = mkIf (cfg.settings != { }) ''
       auto-commits: ${if cfg.settings.autoCommits then "true" else "false"}
     '';
   };
