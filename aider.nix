@@ -36,10 +36,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+    home = {
+      packages = [ cfg.package ];
 
-    home.file.".aider.conf.yml".text = mkIf (cfg.settings != { }) ''
-      auto-commits: ${if cfg.settings.autoCommits then "true" else "false"}
-    '';
+      file.".aider.conf.yml".text = mkIf (cfg.settings != { }) ''
+        auto-commits: ${if cfg.settings.autoCommits then "true" else "false"}
+      '';
+    };
   };
 }
