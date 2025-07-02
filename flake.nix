@@ -2,7 +2,7 @@
   description = "My Home Manager Modules";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     systems.url = "github:nix-systems/x86_64-linux";
     treefmt = {
       url = "github:numtide/treefmt-nix";
@@ -36,7 +36,8 @@
       homeManagerModules = {
         aider = import ./aider.nix;
       };
-    } // utils.lib.eachDefaultSystem (
+    }
+    // utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import nixpkgs { inherit system; };
