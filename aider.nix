@@ -9,6 +9,8 @@ with lib;
 
 let
   cfg = config.programs.aider;
+  settingsFormat = pkgs.formats.yaml { };
+  settingsFile = settingsFormat.generate ".aider.conf.yml" cfg.settings;
 in
 {
   options.programs.aider = {
@@ -22,13 +24,7 @@ in
 
     settings = mkOption {
       type = types.submodule {
-        options = {
-          autoCommits = mkOption {
-            type = types.bool;
-            default = true;
-            description = "Whether to automatically commit changes";
-          };
-        };
+        freeformType = settingsFormat.type;
       };
       default = { };
       description = "Aider configuration settings";
@@ -39,9 +35,7 @@ in
     home = {
       packages = [ cfg.package ];
 
-      file.".aider.conf.yml".text = mkIf (cfg.settings != { }) ''
-        auto-commits: ${if cfg.settings.autoCommits then "true" else "false"}
-      '';
+      file.".aider.conf.yml".source = mkIf (cfg.settings != { }) settingsFile;
     };
   };
 }
